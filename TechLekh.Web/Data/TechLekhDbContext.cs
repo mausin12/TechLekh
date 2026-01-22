@@ -1,0 +1,15 @@
+﻿using Microsoft.EntityFrameworkCore;
+using TechLekh.Web.Models.Domain;
+
+namespace TechLekh.Web.Data
+{
+    public class TechLekhDbContext : DbContext
+    {
+        public TechLekhDbContext(DbContextOptions<TechLekhDbContext> options) : base(options)
+        {
+        }
+
+        public DbSet<BlogPost> BlogPosts { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+    }
+}
