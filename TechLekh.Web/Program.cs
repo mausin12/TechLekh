@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TechLekh.Web.Data;
+using TechLekh.Web.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<TechLekhDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TechLekhDbConnectionString")));
+
+builder.Services.AddScoped<ITagRepository, TagRepository>();
 
 var app = builder.Build();
 
