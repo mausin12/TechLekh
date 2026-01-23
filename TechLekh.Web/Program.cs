@@ -1,7 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using TechLekh.Web.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<TechLekhDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TechLekhDbConnectionString")));
 
 var app = builder.Build();
 
