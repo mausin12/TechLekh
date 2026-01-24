@@ -63,5 +63,12 @@ namespace TechLekh.Web.Controllers
             await _blogPostRepository.AddAsync(blogPost);
             return View(viewModel);
         }
+        [HttpGet]
+        public async Task<IActionResult> List()
+        {
+            var posts = await _blogPostRepository.GetAllAsync();
+            return View(posts);
+        }
+
     }
 }
