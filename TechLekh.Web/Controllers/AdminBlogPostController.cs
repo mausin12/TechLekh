@@ -63,11 +63,85 @@ namespace TechLekh.Web.Controllers
             await _blogPostRepository.AddAsync(blogPost);
             return View(viewModel);
         }
+        
         [HttpGet]
         public async Task<IActionResult> List()
         {
             var posts = await _blogPostRepository.GetAllAsync();
             return View(posts);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var post = await _blogPostRepository.GetAsync(id);
+            var tags = await _tagRepository.GetAllAsync();
+            if (post != null)
+            {
+                var viewModel = new BlogPostEditViewModel
+                {
+                    Id = id,
+                    Heading = post.Heading,
+                    PageTitle = post.PageTitle,
+                    Content = post.Content,
+                    ShortDescription = post.ShortDescription,
+                    FeaturedImageUrl = post.FeaturedImageUrl,
+                    UrlHandle = post.UrlHandle,
+                    PublishedDate = post.PublishedDate,
+                    Author = post.Author,
+                    Visible = post.Visible,
+                    Tags = tags.Select(t =>
+                        new SelectListItem
+                        {
+                            Text = t.Name,
+                            Value = t.Id.ToString()
+                        }
+                    ),
+                    SelectedTags = post.Tags.Select(t => t.Id.ToString()).ToArray()
+                };
+                return View(viewModel);
+            }
+            return View(null);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(BlogPostEditViewModel viewModel)
+        {
+            var post = new BlogPost
+            {
+                Id = viewModel.Id,
+                Heading = viewModel.Heading,
+                PageTitle = viewModel.PageTitle,
+                Content = viewModel.Content,
+                ShortDescription = viewModel.ShortDescription,
+                FeaturedImageUrl = viewModel.FeaturedImageUrl,
+                UrlHandle = viewModel.UrlHandle,
+                PublishedDate = viewModel.PublishedDate,
+                Author = viewModel.Author,
+                Visible = viewModel.Visible,
+            };
+
+            var selectedTags = new List<Tag>();
+            foreach (var selectedTagId in viewModel.SelectedTags)
+            {
+
+                if (Guid.TryParse(selectedTagId, out var selectedTagGuid))
+                {
+                    var tagFromDb = await _tagRepository.GetAsync(selectedTagGuid);
+                    if (tagFromDb != null)
+                    {
+                        selectedTags.Add(tagFromDb);
+                    }
+                }
+            }
+
+            post.Tags = selectedTags;
+            var updatedPost = await _blogPostRepository.UpdateAsync(post);
+            if (updatedPost != null)
+            {
+                return RedirectToAction("List");
+            }
+            return View();
         }
 
     }
