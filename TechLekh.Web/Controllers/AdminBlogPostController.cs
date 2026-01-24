@@ -144,5 +144,16 @@ namespace TechLekh.Web.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var deletedPost = await _blogPostRepository.DeleteAsync(id);
+            if (deletedPost != null)
+            {
+                return RedirectToAction("List");
+            }
+            return RedirectToAction("Edit", new { id = id });
+        }
+
     }
 }
