@@ -46,5 +46,28 @@ namespace TechLekh.Web.Controllers
 
             return View();
         }
+
+        public IActionResult Login()
+        {
+            var viewModel = new LoginViewModel();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var signInResult = await _signInManager.PasswordSignInAsync(viewModel.Username,
+                viewModel.Password, false, false);
+
+            if (signInResult != null && signInResult.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
     }
 }
