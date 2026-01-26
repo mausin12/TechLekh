@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TechLekh.Web.Models.Domain;
 using TechLekh.Web.Models.ViewModels;
@@ -6,6 +7,7 @@ using TechLekh.Web.Repositories;
 
 namespace TechLekh.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminBlogPostController : Controller
     {
         private readonly ITagRepository _tagRepository;
