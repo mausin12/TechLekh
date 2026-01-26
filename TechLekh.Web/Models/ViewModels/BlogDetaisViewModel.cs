@@ -2,7 +2,7 @@
 
 namespace TechLekh.Web.Models.ViewModels
 {
-    public class BlogDetaisViewModel
+    public class  BlogDetaisViewModel
     {
         public Guid Id { get; set; }
         public string Heading { get; set; }
@@ -16,5 +16,6 @@ namespace TechLekh.Web.Models.ViewModels
         public bool Visible { get; set; }
 
         public ICollection<Tag> Tags { get; set; }
+        public int TotalLikes { get; set; }
     }
 }

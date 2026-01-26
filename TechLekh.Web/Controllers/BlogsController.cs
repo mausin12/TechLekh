@@ -8,10 +8,13 @@ namespace TechLekh.Web.Controllers
     public class BlogsController : Controller
     {
         private readonly IBlogPostRepository _blogPostRepository;
+        private readonly IBlogPostLikeRepository _blogPostLikeRepository;
 
-        public BlogsController(IBlogPostRepository blogPostRepository)
+        public BlogsController(IBlogPostRepository blogPostRepository,
+            IBlogPostLikeRepository blogPostLikeRepository)
         {
             this._blogPostRepository = blogPostRepository;
+            this._blogPostLikeRepository = blogPostLikeRepository;
         }
 
         [HttpGet]
@@ -21,6 +24,7 @@ namespace TechLekh.Web.Controllers
             var viewModel = new BlogDetaisViewModel();
             if (blogPost != null)
             {
+                var totalLikes = await _blogPostLikeRepository.GetTotalLikesAsync(blogPost.Id);
                 viewModel = new BlogDetaisViewModel
                 {
                     Id = blogPost.Id,
@@ -34,6 +38,7 @@ namespace TechLekh.Web.Controllers
                     Author = blogPost.Author,
                     Visible = blogPost.Visible,
                     Tags = blogPost.Tags,
+                    TotalLikes = totalLikes,
                 };
             }
 
