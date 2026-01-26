@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechLekh.Web.Data;
 
@@ -11,9 +12,11 @@ using TechLekh.Web.Data;
 namespace TechLekh.Web.Migrations
 {
     [DbContext(typeof(TechLekhDbContext))]
-    partial class TechLekhDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260126134307_Add Comments Table")]
+    partial class AddCommentsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
