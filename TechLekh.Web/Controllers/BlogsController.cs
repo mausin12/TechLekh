@@ -9,12 +9,18 @@ namespace TechLekh.Web.Controllers
     {
         private readonly IBlogPostRepository _blogPostRepository;
         private readonly IBlogPostLikeRepository _blogPostLikeRepository;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
         public BlogsController(IBlogPostRepository blogPostRepository,
-            IBlogPostLikeRepository blogPostLikeRepository)
+            IBlogPostLikeRepository blogPostLikeRepository,
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager)
         {
             this._blogPostRepository = blogPostRepository;
             this._blogPostLikeRepository = blogPostLikeRepository;
+            this._userManager = userManager;
+            this._signInManager = signInManager;
         }
 
         [HttpGet]
@@ -25,6 +31,12 @@ namespace TechLekh.Web.Controllers
             if (blogPost != null)
             {
                 var totalLikes = await _blogPostLikeRepository.GetTotalLikesAsync(blogPost.Id);
+                var IsLikedByCurrentUser = false;
+                if (_signInManager.IsSignedIn(User))
+                {
+                    var userId = _userManager.GetUserId(User);
+                    IsLikedByCurrentUser = await _blogPostLikeRepository.HasUserLikedBlog(Guid.Parse(userId), blogPost.Id);
+                }
                 viewModel = new BlogDetaisViewModel
                 {
                     Id = blogPost.Id,
@@ -39,6 +51,7 @@ namespace TechLekh.Web.Controllers
                     Visible = blogPost.Visible,
                     Tags = blogPost.Tags,
                     TotalLikes = totalLikes,
+                    IsLikedByCurrentUser = IsLikedByCurrentUser,
                 };
             }
 

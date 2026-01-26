@@ -17,5 +17,6 @@ namespace TechLekh.Web.Models.ViewModels
 
         public ICollection<Tag> Tags { get; set; }
         public int TotalLikes { get; set; }
+        public bool IsLikedByCurrentUser { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using TechLekh.Web.Data;
+using TechLekh.Web.Models.Domain;
 
 namespace TechLekh.Web.Repositories
 {
@@ -17,6 +18,19 @@ namespace TechLekh.Web.Repositories
         {
             return await _dbContext.BlogPostLikes
                 .CountAsync(x => x.BlogPostId == blogPostId);
+        }
+
+        public async Task<BlogPostLike> AddLikeForBlog(BlogPostLike blogPostLike)
+        {
+            await _dbContext.BlogPostLikes.AddAsync(blogPostLike);
+            await _dbContext.SaveChangesAsync();
+            return blogPostLike;
+        }
+
+        public async Task<bool> HasUserLikedBlog(Guid userId, Guid blogPostId)
+        {
+            var like = await _dbContext.BlogPostLikes.FirstOrDefaultAsync(x => x.UserId == userId && x.BlogPostId == blogPostId);
+            return like != null;
         }
     }
 }
