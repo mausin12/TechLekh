@@ -41,6 +41,18 @@ namespace TechLekh.Web.Controllers
                     var userId = _userManager.GetUserId(User);
                     IsLikedByCurrentUser = await _blogPostLikeRepository.HasUserLikedBlog(Guid.Parse(userId), blogPost.Id);
                 }
+                //Get comments for blog post
+                var blogComments = await _blogPostCommentRepository.GetCommentsByBlogIdAsync(blogPost.Id);
+                var blogCommentsForView = new List<BlogCommentListItemViewModel>();
+                foreach (var blogComment in blogComments)
+                {
+                    blogCommentsForView.Add(new BlogCommentListItemViewModel
+                    {
+                        Description = blogComment.Description,
+                        DateAdded = blogComment.DateAdded,
+                        Username = (await _userManager.FindByIdAsync(blogComment.UserId.ToString())).UserName
+                    });
+                }
                 viewModel = new BlogDetaisViewModel
                 {
                     Id = blogPost.Id,
@@ -56,6 +68,7 @@ namespace TechLekh.Web.Controllers
                     Tags = blogPost.Tags,
                     TotalLikes = totalLikes,
                     IsLikedByCurrentUser = IsLikedByCurrentUser,
+                    Comments = blogCommentsForView,
                 };
             }
 

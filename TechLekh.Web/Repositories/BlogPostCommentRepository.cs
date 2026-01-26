@@ -1,4 +1,5 @@
-﻿using TechLekh.Web.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using TechLekh.Web.Data;
 using TechLekh.Web.Models.Domain;
 
 namespace TechLekh.Web.Repositories
@@ -17,6 +18,11 @@ namespace TechLekh.Web.Repositories
             _dbContext.BlogPostComments.Add(comment);
             await _dbContext.SaveChangesAsync();
             return comment;
+        }
+
+        public async Task<IEnumerable<BlogPostComment>> GetCommentsByBlogIdAsync(Guid blogId)
+        {
+            return await _dbContext.BlogPostComments.Where(x => x.BlogPostId == blogId).ToListAsync();
         }
     }
 }

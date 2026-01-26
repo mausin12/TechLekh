@@ -20,5 +20,6 @@ namespace TechLekh.Web.Models.ViewModels
         public bool IsLikedByCurrentUser { get; set; }
 
         public string CommentDescription { get; set; }
+        public IEnumerable<BlogCommentListItemViewModel> Comments { get; set; }
     }
 }
