@@ -47,9 +47,13 @@ namespace TechLekh.Web.Controllers
             return View();
         }
 
-        public IActionResult Login()
+        [HttpGet]
+        public IActionResult Login(string returnUrl)
         {
-            var viewModel = new LoginViewModel();
+            var viewModel = new LoginViewModel
+            {
+                ReturnUrl = returnUrl
+            };
             return View(viewModel);
         }
 
@@ -65,6 +69,10 @@ namespace TechLekh.Web.Controllers
 
             if (signInResult != null && signInResult.Succeeded)
             {
+                if (!string.IsNullOrEmpty(viewModel.ReturnUrl))
+                {
+                    return Redirect(viewModel.ReturnUrl);
+                }
                 return RedirectToAction("Index", "Home");
             }
             return View();
