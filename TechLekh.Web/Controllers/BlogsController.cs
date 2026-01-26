@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TechLekh.Web.Models.Domain;
 using TechLekh.Web.Models.ViewModels;
 using TechLekh.Web.Repositories;
 
@@ -11,16 +12,19 @@ namespace TechLekh.Web.Controllers
         private readonly IBlogPostLikeRepository _blogPostLikeRepository;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IBlogPostCommentRepository _blogPostCommentRepository;
 
         public BlogsController(IBlogPostRepository blogPostRepository,
             IBlogPostLikeRepository blogPostLikeRepository,
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            IBlogPostCommentRepository blogPostCommentRepository)
         {
             this._blogPostRepository = blogPostRepository;
             this._blogPostLikeRepository = blogPostLikeRepository;
             this._userManager = userManager;
             this._signInManager = signInManager;
+            this._blogPostCommentRepository = blogPostCommentRepository;
         }
 
         [HttpGet]
@@ -56,6 +60,24 @@ namespace TechLekh.Web.Controllers
             }
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddComment(BlogDetaisViewModel viewModel)
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var comment = new BlogPostComment
+                {
+                    BlogPostId = viewModel.Id,
+                    Description = viewModel.CommentDescription,
+                    UserId = Guid.Parse(_userManager.GetUserId(User)),
+                    DateAdded = DateTime.Now
+                };
+                await _blogPostCommentRepository.AddAsync(comment);
+                return RedirectToAction("Index", "Blogs", new { urlHandle = viewModel.UrlHandle });
+            }
+            return View();
         }
     }
 }
