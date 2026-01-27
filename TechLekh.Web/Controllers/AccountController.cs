@@ -25,7 +25,7 @@ namespace TechLekh.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) //Check for model validation
             {
                 var identityUser = new IdentityUser
                 {
