@@ -26,6 +26,10 @@ namespace TechLekh.Web.Controllers
         [ActionName("Add")]
         public async Task<IActionResult> Add(TagAddViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             var tag = new Tag
             {
                 Name = viewModel.Name,
