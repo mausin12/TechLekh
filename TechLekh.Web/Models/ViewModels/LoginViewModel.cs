@@ -11,7 +11,6 @@ namespace TechLekh.Web.Models.ViewModels
         [MinLength(6, ErrorMessage = "Password should be atleast 6 characters")]
         public string Password { get; set; }
 
-        [Required]
-        public string ReturnUrl { get; set; }
+        public string? ReturnUrl { get; set; }
     }
 }
