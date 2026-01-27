@@ -1,0 +1,49 @@
+﻿@model TechLekh.Web.Models.ViewModels.UserViewModel
+@{
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>Users</h1>
+    </div>
+</div>
+
+<div class="container mt-4">
+    
+    @if (Model.Users is not null && Model.Users.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Users)
+                {
+                    <tr>
+                        <td>@user.Id</td>
+                        <td>@user.Username</td>
+                        <td>@user.Email</td>
+                        <td>
+                            <form method="post"
+                                  asp-controller="AdminUsers"
+                                  asp-action="Delete"
+                                  asp-route-id="@user.Id">
+                                
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No users found</p>
+    }
+
+</div>
