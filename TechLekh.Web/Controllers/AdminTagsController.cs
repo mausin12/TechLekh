@@ -26,6 +26,7 @@ namespace TechLekh.Web.Controllers
         [ActionName("Add")]
         public async Task<IActionResult> Add(TagAddViewModel viewModel)
         {
+            ValidateAddTagRequest(viewModel);
             if (!ModelState.IsValid)
             {
                 return View();
@@ -90,6 +91,17 @@ namespace TechLekh.Web.Controllers
                 return RedirectToAction("List");
             }
             return RedirectToAction("Edit", new { id = id });
+        }
+
+        private void ValidateAddTagRequest(TagAddViewModel requestData)
+        {
+            if (requestData.Name != null && requestData.DisplayName != null)
+            {
+                if (requestData.Name == requestData.DisplayName)
+                {
+                    ModelState.AddModelError("DisplayName", "Name and Display Name cannot be same");
+                }
+            }
         }
     }
 }
