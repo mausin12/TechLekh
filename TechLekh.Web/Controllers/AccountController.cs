@@ -60,6 +60,10 @@ namespace TechLekh.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             var signInResult = await _signInManager.PasswordSignInAsync(viewModel.Username,
                 viewModel.Password, false, false);
 
