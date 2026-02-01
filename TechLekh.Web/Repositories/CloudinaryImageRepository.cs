@@ -1,21 +1,20 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using Microsoft.Extensions.Options;
+using TechLekh.Web.Models.Config;
 
 namespace TechLekh.Web.Repositories
 {
     public class CloudinaryImageRepository : IImageRepository
     {
-        //private readonly IConfiguration _configuration;
         private readonly Account _account;
+        private readonly CloudinarySettings _cloudinarySettings;
 
-        public CloudinaryImageRepository(IConfiguration configuration)
+        public CloudinaryImageRepository(IOptions<CloudinarySettings> options)
         {
-            //this._configuration = configuration;
-            this._account = new Account(
-                configuration.GetSection("Cloudinary")["CloudName"],
-                configuration.GetSection("Cloudinary")["ApiKey"],
-                configuration.GetSection("Cloudinary")["ApiSecret"]
-                );
+            this._cloudinarySettings = options.Value;
+            this._account = new Account(_cloudinarySettings.CloudName, 
+                _cloudinarySettings.ApiKey, _cloudinarySettings.ApiSecret);
         }
         public async Task<string> UploadAsync(IFormFile file)
         {
