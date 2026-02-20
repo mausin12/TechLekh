@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TechLekh.Core\TechLekh.Core.csproj" />
+  </ItemGroup>
+
 </Project>
