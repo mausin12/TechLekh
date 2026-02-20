@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using TechLekh.Web.Models.Domain;
+using TechLekh.Core.Domain;
 using TechLekh.Web.Models.ViewModels;
 using TechLekh.Web.Repositories;
 

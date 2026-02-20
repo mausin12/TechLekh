@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TechLekh.Web.Models.Domain;
+using TechLekh.Core.Domain;
 using TechLekh.Web.Models.Dto;
 using TechLekh.Web.Repositories;
 

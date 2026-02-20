@@ -1,4 +1,4 @@
-﻿namespace TechLekh.Web.Models.Domain
+﻿namespace TechLekh.Core.Domain
 {
     public class BlogPostComment
     {

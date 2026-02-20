@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TechLekh.Web.Models.Domain;
+using TechLekh.Core.Domain;
 
 namespace TechLekh.Web.Data
 {

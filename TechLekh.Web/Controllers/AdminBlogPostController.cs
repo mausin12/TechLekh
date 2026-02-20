@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using TechLekh.Web.Models.Domain;
+using TechLekh.Core.Domain;
 using TechLekh.Web.Models.ViewModels;
 using TechLekh.Web.Repositories;
 

@@ -40,7 +40,7 @@ namespace TechLekh.Web.Migrations
                     b.ToTable("BlogPostTag");
                 });
 
-            modelBuilder.Entity("TechLekh.Web.Models.Domain.BlogPost", b =>
+            modelBuilder.Entity("TechLekh.Core.Domain.BlogPost", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -85,7 +85,7 @@ namespace TechLekh.Web.Migrations
                     b.ToTable("BlogPosts");
                 });
 
-            modelBuilder.Entity("TechLekh.Web.Models.Domain.BlogPostLike", b =>
+            modelBuilder.Entity("TechLekh.Core.Domain.BlogPostLike", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -104,7 +104,7 @@ namespace TechLekh.Web.Migrations
                     b.ToTable("BlogPostLikes");
                 });
 
-            modelBuilder.Entity("TechLekh.Web.Models.Domain.Tag", b =>
+            modelBuilder.Entity("TechLekh.Core.Domain.Tag", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -125,29 +125,29 @@ namespace TechLekh.Web.Migrations
 
             modelBuilder.Entity("BlogPostTag", b =>
                 {
-                    b.HasOne("TechLekh.Web.Models.Domain.BlogPost", null)
+                    b.HasOne("TechLekh.Core.Domain.BlogPost", null)
                         .WithMany()
                         .HasForeignKey("BlogPostsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TechLekh.Web.Models.Domain.Tag", null)
+                    b.HasOne("TechLekh.Core.Domain.Tag", null)
                         .WithMany()
                         .HasForeignKey("TagsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TechLekh.Web.Models.Domain.BlogPostLike", b =>
+            modelBuilder.Entity("TechLekh.Core.Domain.BlogPostLike", b =>
                 {
-                    b.HasOne("TechLekh.Web.Models.Domain.BlogPost", null)
+                    b.HasOne("TechLekh.Core.Domain.BlogPost", null)
                         .WithMany("Likes")
                         .HasForeignKey("BlogPostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TechLekh.Web.Models.Domain.BlogPost", b =>
+            modelBuilder.Entity("TechLekh.Core.Domain.BlogPost", b =>
                 {
                     b.Navigation("Likes");
                 });

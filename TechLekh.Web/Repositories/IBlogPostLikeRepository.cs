@@ -1,4 +1,4 @@
-﻿using TechLekh.Web.Models.Domain;
+﻿using TechLekh.Core.Domain;
 
 namespace TechLekh.Web.Repositories
 {
