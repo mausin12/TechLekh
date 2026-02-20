@@ -15,4 +15,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TechLekh.Core\TechLekh.Core.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace TechLekh.Web.Data
+namespace TechLekh.Infra.Data
 {
     public class AuthDbContext : IdentityDbContext
     {

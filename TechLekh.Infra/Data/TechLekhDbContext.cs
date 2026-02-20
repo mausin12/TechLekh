@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TechLekh.Core.Domain;
 
-namespace TechLekh.Web.Data
+namespace TechLekh.Infra.Data
 {
     public class TechLekhDbContext : DbContext
     {
