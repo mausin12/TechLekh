@@ -22,8 +22,4 @@
     <ProjectReference Include="..\TechLekh.Infra\TechLekh.Infra.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Config\" />
-  </ItemGroup>
-
 </Project>

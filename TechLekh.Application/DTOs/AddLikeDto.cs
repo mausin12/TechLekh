@@ -1,4 +1,4 @@
-﻿namespace TechLekh.Web.Models.Dto
+﻿namespace TechLekh.Application.DTOs
 {
     public class AddLikeDto
     {
