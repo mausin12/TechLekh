@@ -28,6 +28,7 @@ namespace TechLekh.Infra.Repositories
                 new AppUser
                 {
                     Id = u.Id,
+                    UserName = u.UserName,
                     Email = u.Email
                 });
         }
