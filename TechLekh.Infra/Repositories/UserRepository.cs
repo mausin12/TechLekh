@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using TechLekh.Web.Data;
+using TechLekh.Application.Interfaces.Repositories;
+using TechLekh.Core.Domain;
+using TechLekh.Infra.Data;
 
-namespace TechLekh.Web.Repositories
+namespace TechLekh.Infra.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -12,7 +14,7 @@ namespace TechLekh.Web.Repositories
         {
             this._authDbContext = authDbContext;
         }
-        public async Task<IEnumerable<IdentityUser>> GetAll()
+        public async Task<IEnumerable<AppUser>> GetAll()
         {
             var users = await _authDbContext.Users.ToListAsync();
             var superAdminUser = await _authDbContext.Users
@@ -22,7 +24,12 @@ namespace TechLekh.Web.Repositories
             {
                 users.Remove(superAdminUser);
             }
-            return users;
+            return users.Select(u =>
+                new AppUser
+                {
+                    Id = u.Id,
+                    Email = u.Email
+                });
         }
     }
 }

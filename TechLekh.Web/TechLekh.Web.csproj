@@ -21,4 +21,8 @@
     <ProjectReference Include="..\TechLekh.Core\TechLekh.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Config\" />
+  </ItemGroup>
+
 </Project>

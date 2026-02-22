@@ -1,4 +1,4 @@
-﻿namespace TechLekh.Web.Models.Config
+﻿namespace TechLekh.Infra.Configurations
 {
     public class CloudinarySettings
     {

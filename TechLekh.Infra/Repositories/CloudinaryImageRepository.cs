@@ -1,9 +1,10 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Options;
-using TechLekh.Web.Models.Config;
+using TechLekh.Application.Interfaces.Repositories;
+using TechLekh.Infra.Configurations;
 
-namespace TechLekh.Web.Repositories
+namespace TechLekh.Infra.Repositories
 {
     public class CloudinaryImageRepository : IImageRepository
     {
@@ -16,14 +17,14 @@ namespace TechLekh.Web.Repositories
             this._account = new Account(_cloudinarySettings.CloudName, 
                 _cloudinarySettings.ApiKey, _cloudinarySettings.ApiSecret);
         }
-        public async Task<string> UploadAsync(IFormFile file)
+        public async Task<string> UploadAsync(Stream stream, string fileName)
         {
             var client = new Cloudinary(_account);
 
             var uploadParams = new ImageUploadParams()
             {
-                File = new FileDescription(file.FileName, file.OpenReadStream()),
-                DisplayName = file.FileName
+                File = new FileDescription(fileName, stream),
+                DisplayName = fileName
             };
 
             var uploadResult = await client.UploadAsync(uploadParams);
