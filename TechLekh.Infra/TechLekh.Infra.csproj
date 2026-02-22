@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TechLekh.Application\TechLekh.Application.csproj" />
-    <ProjectReference Include="..\TechLekh.Core\TechLekh.Core.csproj" />
   </ItemGroup>
 
 </Project>
