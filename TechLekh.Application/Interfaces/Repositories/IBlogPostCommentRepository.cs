@@ -1,6 +1,6 @@
 ﻿using TechLekh.Core.Domain;
 
-namespace TechLekh.Web.Repositories
+namespace TechLekh.Application.Interfaces.Repositories
 {
     public interface IBlogPostCommentRepository
     {
