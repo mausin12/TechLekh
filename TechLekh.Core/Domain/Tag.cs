@@ -6,8 +6,6 @@
         public string Name { get; set; }
         public string DisplayName { get; set; }
 
-        public string Test { get; set; }
-
         public ICollection<BlogPost> BlogPosts { get; set; }
     }
 }
