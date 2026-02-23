@@ -2,7 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TechLekh.Web.Models;
 using TechLekh.Web.Models.ViewModels;
-using TechLekh.Web.Repositories;
+using TechLekh.Application.Interfaces.Repositories;
 
 namespace TechLekh.Web.Controllers
 {

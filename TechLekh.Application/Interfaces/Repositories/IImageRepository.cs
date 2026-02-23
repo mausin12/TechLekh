@@ -1,7 +1,7 @@
-﻿namespace TechLekh.Web.Repositories
+﻿namespace TechLekh.Application.Interfaces.Repositories
 {
     public interface IImageRepository
     {
-        Task<string> UploadAsync(IFormFile file);
+        Task<string> UploadAsync(Stream stream, string fileName);
     }
 }

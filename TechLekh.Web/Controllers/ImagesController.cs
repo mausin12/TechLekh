@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TechLekh.Web.Repositories;
+using TechLekh.Application.Interfaces.Repositories;
 
 namespace TechLekh.Web.Controllers
 {
@@ -18,7 +18,7 @@ namespace TechLekh.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadAsync(IFormFile file)
         {
-            var imageUrl = await _imageRepository.UploadAsync(file);
+            var imageUrl = await _imageRepository.UploadAsync(file.OpenReadStream(), file.FileName);
             if (imageUrl == null)
             {
                 return Problem(

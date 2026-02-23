@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TechLekh.Core.Domain;
-using TechLekh.Web.Models.Dto;
-using TechLekh.Web.Repositories;
+using TechLekh.Application.DTOs;
+using TechLekh.Application.Interfaces.Repositories;
 
 namespace TechLekh.Web.Controllers
 {

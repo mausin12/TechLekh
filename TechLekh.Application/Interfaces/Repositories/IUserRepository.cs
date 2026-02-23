@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using TechLekh.Core.Domain;
 
-namespace TechLekh.Web.Repositories
+namespace TechLekh.Application.Interfaces.Repositories
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<IdentityUser>> GetAll();
+        Task<IEnumerable<AppUser>> GetAll();
     }
 }

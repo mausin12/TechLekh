@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using TechLekh.Web.Data;
-using TechLekh.Web.Models.Config;
-using TechLekh.Web.Repositories;
+using TechLekh.Infra.Data;
+using TechLekh.Infra.Configurations;
+using TechLekh.Application.Interfaces.Repositories;
+using TechLekh.Infra.Repositories;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

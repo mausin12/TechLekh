@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TechLekh.Web.Data;
+using TechLekh.Infra.Data;
 using TechLekh.Core.Domain;
+using TechLekh.Application.Interfaces.Repositories;
 
-namespace TechLekh.Web.Repositories
+namespace TechLekh.Infra.Repositories
 {
     public class BlogPostRepository : IBlogPostRepository
     {
