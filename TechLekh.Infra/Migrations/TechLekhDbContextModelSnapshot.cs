@@ -34,7 +34,7 @@ namespace TechLekh.Web.Migrations
 
                     b.HasIndex("TagsId");
 
-                    b.ToTable("BlogPostTag");
+                    b.ToTable("BlogPostTag", (string)null);
                 });
 
             modelBuilder.Entity("TechLekh.Core.Domain.BlogPost", b =>
@@ -79,7 +79,7 @@ namespace TechLekh.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BlogPosts");
+                    b.ToTable("BlogPosts", (string)null);
                 });
 
             modelBuilder.Entity("TechLekh.Core.Domain.BlogPostComment", b =>
@@ -105,7 +105,7 @@ namespace TechLekh.Web.Migrations
 
                     b.HasIndex("BlogPostId");
 
-                    b.ToTable("BlogPostComments");
+                    b.ToTable("BlogPostComments", (string)null);
                 });
 
             modelBuilder.Entity("TechLekh.Core.Domain.BlogPostLike", b =>
@@ -124,7 +124,7 @@ namespace TechLekh.Web.Migrations
 
                     b.HasIndex("BlogPostId");
 
-                    b.ToTable("BlogPostLikes");
+                    b.ToTable("BlogPostLikes", (string)null);
                 });
 
             modelBuilder.Entity("TechLekh.Core.Domain.Tag", b =>
@@ -143,7 +143,7 @@ namespace TechLekh.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("BlogPostTag", b =>
