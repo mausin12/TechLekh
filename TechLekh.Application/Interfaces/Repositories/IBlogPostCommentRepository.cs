@@ -2,9 +2,9 @@
 
 namespace TechLekh.Application.Interfaces.Repositories
 {
-    public interface IBlogPostCommentRepository
+    public interface IBlogPostCommentRepository : IRepository<BlogPostComment>
     {
-        Task<BlogPostComment> AddAsync(BlogPostComment comment);
+        new Task<BlogPostComment> AddAsync(BlogPostComment comment);
 
         Task<IEnumerable<BlogPostComment>> GetCommentsByBlogIdAsync(Guid blogId);
     }
