@@ -6,31 +6,31 @@ using TechLekh.Application.Interfaces.Repositories;
 
 namespace TechLekh.Infra.Repositories
 {
-    public class BlogPostLikeRepository : IBlogPostLikeRepository
+    public class BlogPostLikeRepository : Repository<BlogPostLike>, IBlogPostLikeRepository
     {
-        private readonly TechLekhDbContext _dbContext;
 
-        public BlogPostLikeRepository(TechLekhDbContext dbContext)
+        public BlogPostLikeRepository(TechLekhDbContext dbContext) : base(dbContext)
         {
-            this._dbContext = dbContext;
         }
+
+        private TechLekhDbContext DbContext => _dbContext as TechLekhDbContext;
 
         public async Task<int> GetTotalLikesAsync(Guid blogPostId)
         {
-            return await _dbContext.BlogPostLikes
+            return await DbContext.BlogPostLikes
                 .CountAsync(x => x.BlogPostId == blogPostId);
         }
 
         public async Task<BlogPostLike> AddLikeForBlog(BlogPostLike blogPostLike)
         {
-            await _dbContext.BlogPostLikes.AddAsync(blogPostLike);
-            await _dbContext.SaveChangesAsync();
+            await DbContext.BlogPostLikes.AddAsync(blogPostLike);
+            await DbContext.SaveChangesAsync();
             return blogPostLike;
         }
 
         public async Task<bool> HasUserLikedBlog(Guid userId, Guid blogPostId)
         {
-            var like = await _dbContext.BlogPostLikes.FirstOrDefaultAsync(x => x.UserId == userId && x.BlogPostId == blogPostId);
+            var like = await DbContext.BlogPostLikes.FirstOrDefaultAsync(x => x.UserId == userId && x.BlogPostId == blogPostId);
             return like != null;
         }
     }

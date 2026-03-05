@@ -2,7 +2,7 @@
 
 namespace TechLekh.Application.Interfaces.Repositories
 {
-    public interface IBlogPostLikeRepository
+    public interface IBlogPostLikeRepository : IRepository<BlogPostLike>
     {
         Task<int> GetTotalLikesAsync(Guid blogPostId);
 
