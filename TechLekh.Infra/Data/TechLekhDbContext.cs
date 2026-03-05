@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using TechLekh.Core.Domain;
+using TechLekh.Infra.Data.EntityConfigurations;
 
 namespace TechLekh.Infra.Data
 {
@@ -13,5 +15,13 @@ namespace TechLekh.Infra.Data
         public DbSet<Tag> Tags { get; set; }
         public DbSet<BlogPostLike> BlogPostLikes { get; set; }
         public DbSet<BlogPostComment> BlogPostComments { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.ApplyConfiguration(new BlogPostConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(TechLekhDbContext).Assembly);
+        }
     }
 }
