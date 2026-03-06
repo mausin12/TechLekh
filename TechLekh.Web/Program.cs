@@ -4,6 +4,8 @@ using TechLekh.Infra.Data;
 using TechLekh.Infra.Configurations;
 using TechLekh.Application.Interfaces.Repositories;
 using TechLekh.Infra.Repositories;
+using TechLekh.Application.Interfaces;
+using TechLekh.Infra;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +39,7 @@ builder.Services.AddScoped<IImageRepository, CloudinaryImageRepository>();
 builder.Services.AddScoped<IBlogPostLikeRepository, BlogPostLikeRepository>();
 builder.Services.AddScoped<IBlogPostCommentRepository, BlogPostCommentRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
