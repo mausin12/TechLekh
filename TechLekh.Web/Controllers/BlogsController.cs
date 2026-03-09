@@ -10,72 +10,60 @@ namespace TechLekh.Web.Controllers
 {
     public class BlogsController : Controller
     {
-        private readonly IBlogPostRepository _blogPostRepository;
-        private readonly IBlogPostLikeRepository _blogPostLikeRepository;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly IBlogPostCommentRepository _blogPostCommentRepository;
         private readonly ICommentService _commentService;
+        private readonly IBlogService _blogService;
 
-        public BlogsController(IBlogPostRepository blogPostRepository,
-            IBlogPostLikeRepository blogPostLikeRepository,
+        public BlogsController(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            IBlogPostCommentRepository blogPostCommentRepository,
-            ICommentService commentService)
+            ICommentService commentService,
+            IBlogService blogService)
         {
-            this._blogPostRepository = blogPostRepository;
-            this._blogPostLikeRepository = blogPostLikeRepository;
             this._userManager = userManager;
             this._signInManager = signInManager;
-            this._blogPostCommentRepository = blogPostCommentRepository;
             this._commentService = commentService;
+            this._blogService = blogService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index(string urlHandle)
         {
-            var blogPost = await _blogPostRepository.GetByUrlHandle(urlHandle);
-            var viewModel = new BlogDetaisViewModel();
-            if (blogPost != null)
+            Guid? userId = null;
+
+            if (_signInManager.IsSignedIn(User))
             {
-                var totalLikes = await _blogPostLikeRepository.GetTotalLikesAsync(blogPost.Id);
-                var IsLikedByCurrentUser = false;
-                if (_signInManager.IsSignedIn(User))
-                {
-                    var userId = _userManager.GetUserId(User);
-                    IsLikedByCurrentUser = await _blogPostLikeRepository.HasUserLikedBlog(Guid.Parse(userId), blogPost.Id);
-                }
-                //Get comments for blog post
-                var blogComments = await _blogPostCommentRepository.GetCommentsByBlogIdAsync(blogPost.Id);
-                var blogCommentsForView = new List<BlogCommentListItemViewModel>();
-                foreach (var blogComment in blogComments)
-                {
-                    blogCommentsForView.Add(new BlogCommentListItemViewModel
-                    {
-                        Description = blogComment.Description,
-                        DateAdded = blogComment.DateAdded,
-                        Username = (await _userManager.FindByIdAsync(blogComment.UserId.ToString())).UserName
-                    });
-                }
-                viewModel = new BlogDetaisViewModel
-                {
-                    Id = blogPost.Id,
-                    Heading = blogPost.Heading,
-                    PageTitle = blogPost.PageTitle,
-                    Content = blogPost.Content,
-                    ShortDescription = blogPost.ShortDescription,
-                    FeaturedImageUrl = blogPost.FeaturedImageUrl,
-                    UrlHandle = blogPost.UrlHandle,
-                    PublishedDate = blogPost.PublishedDate,
-                    Author = blogPost.Author,
-                    Visible = blogPost.Visible,
-                    Tags = blogPost.Tags,
-                    TotalLikes = totalLikes,
-                    IsLikedByCurrentUser = IsLikedByCurrentUser,
-                    Comments = blogCommentsForView,
-                };
+                userId = Guid.Parse(_userManager.GetUserId(User));
             }
+
+            var dto = await _blogService.GetBlogDetails(urlHandle, userId);
+            
+            if (dto == null)
+                return NotFound();
+            
+            var viewModel = new BlogDetaisViewModel
+            {
+                Id = dto.Id,
+                Heading = dto.Heading,
+                PageTitle = dto.PageTitle,
+                Content = dto.Content,
+                ShortDescription = dto.ShortDescription,
+                FeaturedImageUrl = dto.FeaturedImageUrl,
+                UrlHandle = dto.UrlHandle,
+                PublishedDate = dto.PublishedDate,
+                Author = dto.Author,
+                Visible = dto.Visible,
+                Tags = dto.Tags,
+                TotalLikes = dto.TotalLikes,
+                IsLikedByCurrentUser = dto.IsLikedByCurrentUser,
+                Comments = dto.Comments.Select(c => new BlogCommentListItemViewModel
+                {
+                    Description = c.Description,
+                    DateAdded = c.DateAdded,
+                    Username = c.Username
+                }).ToList()
+            };
 
             return View(viewModel);
         }

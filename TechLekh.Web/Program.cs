@@ -8,6 +8,7 @@ using TechLekh.Application.Interfaces;
 using TechLekh.Infra;
 using TechLekh.Application.Interfaces.Services;
 using TechLekh.Application.Services;
+using TechLekh.Infra.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,6 +45,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IUserService, IdentityUserService>();
+builder.Services.AddScoped<IBlogService, BlogService>();
 
 var app = builder.Build();
 
