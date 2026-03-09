@@ -10,33 +10,24 @@ namespace TechLekh.Web.Controllers
 {
     public class BlogsController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ICommentService _commentService;
         private readonly IBlogService _blogService;
+        private readonly IUserService _userService;
 
         public BlogsController(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
             ICommentService commentService,
-            IBlogService blogService)
+            IBlogService blogService,
+            IUserService userService)
         {
-            this._userManager = userManager;
-            this._signInManager = signInManager;
             this._commentService = commentService;
             this._blogService = blogService;
+            this._userService = userService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index(string urlHandle)
         {
-            Guid? userId = null;
-
-            if (_signInManager.IsSignedIn(User))
-            {
-                userId = Guid.Parse(_userManager.GetUserId(User));
-            }
-
+            var userId = _userService.GetCurrentUserId(User);
             var dto = await _blogService.GetBlogDetails(urlHandle, userId);
             
             if (dto == null)
@@ -71,10 +62,10 @@ namespace TechLekh.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddComment(BlogDetaisViewModel viewModel)
         {
-            if (!_signInManager.IsSignedIn(User))
+            if (!_userService.IsUserSignedIn(User))
                 return View();
 
-            var userId = Guid.Parse(_userManager.GetUserId(User));
+            var userId = _userService.GetSignedInUserId(User);
 
             await _commentService.AddCommentAsync(viewModel.Id, viewModel.CommentDescription, userId);                
 
